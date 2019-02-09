@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html class=" wf-hindvadodara-n3-active wf-hindvadodara-n4-active wf-hindvadodara-n5-active wf-hindvadodara-n6-active wf-hindvadodara-n7-active wf-active" lang="en"><head id="ctl00_Head1">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8"><title>
+	Using EF Core in ASP.NET Core Web API for performing CRUD operations | DotNetCurry
+</title><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"><meta name="description" content="This article explains how to use Entity Framework (EF) Core in ASP.NET Core Web API for performing CRUD operations."><meta name="keywords" content="Entity Framework"><meta name="author" content="DotNetCurry.com"><link rel="shortcut icon" href="https://www.dotnetcurry.com/img/favicon.ico"><link rel="icon" type="image/ico" href="https://www.dotnetcurry.com/img/favicon.ico"><link rel="stylesheet" href="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/font-awesome.css"><link rel="canonical" href="https://www.dotnetcurry.com/entityframework/1348/ef-core-web-api-crud-operations"><link href="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/site.css" rel="stylesheet">
+
+
+    <style>.async-hide { opacity: 0 !important} </style>
+    <script async="" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/uwt.js"></script><script async="" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/fbevents.js"></script><script async="" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/analytics.js"></script><script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+    h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+    (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+    })(window,document.documentElement,'async-hide','dataLayer',4000,
+    {'GTM-NJXQ5BG':true});</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-2417460-4', 'auto');
+      ga('require', 'GTM-NJXQ5BG');
+      ga('send', 'pageview');
+    </script>
+
+    <!-- Facebook Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1902706389940870', {
+    //em: 'insert_email_variable'
+    });
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1902706389940870&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- DO NOT MODIFY -->
+    <!-- End Facebook Pixel Code -->
+
+    <!-- Twitter universal website tag code May 30 17 -->
+    <script>
+    !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+    },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
+    a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+    // Insert Twitter Pixel ID and Standard Event data below
+    twq('init','nw0gz');
+    twq('track','PageView');
+    </script>
+    <!-- End Twitter universal website tag code --><link rel="stylesheet" href="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/css.css" media="all">
+</head>
+<body>
+    <form name="aspnetForm" method="post" action="./ef-core-web-api-crud-operations?ID=1348" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE0MDk2ODQwMTdkZJysVikQVHzjAtZqOeUvZO1Bu1pl">
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="A9C58E29">
+</div>
+        <div class="wrapper">
+            <!-- header -->
+            <header class="header header-megamenu">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="container">
+                            <!--<div class="search-bar">                       
+                                <input type="search" onkeyup="executeQuery();" placeholder="Type search text here..." name="search" id="search-keyword">
+                                <div class="search-close" id="x"><i class="fa fa-times"></i></div>                               
+                            </div>-->                
+                       
+
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <!--<a class="navbar-brand" href="./index.html">
+                                    <img src="img/dnc-logo-tee-trans.png"
+                                         srcset="img/dnc-logo-small.jpg 1980w, img/dnc-logo-x-small.jpg 320w" 
+                                         sizes ="100vw"
+                                         class="img-responsive" alt="DNC Magazine" />
+                                </a>-->
+                                <a class="navbar-brand" href="https://www.dotnetcurry.com/">
+                                    <img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/dnc-logo-small.jpg" class="img-responsive" alt="DNC Magazine">
+                                </a>
+                            </div>
+
+                            <!--<div class="search-trigger pull-right"></div>-->
+
+                            <div class="navbar-social pull-right visible-xs-block, hidden-xs">
+                                <a href="https://www.facebook.com/dotnetcurry" rel="nofollow" target="_blank"><img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/fb.png" class="img-responsive" alt="DotNetCurry's Official Facebook Account"></a>
+                                <a href="https://www.twitter.com/dotnetcurry" rel="nofollow" target="_blank"><img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/twit.png" class="img-responsive" alt="DotNetCurry's Official Twitter Account"></a>
+                                <a href="https://github.com/dotnetcurry" rel="nofollow" target="_blank"><img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/git.png" class="img-responsive" alt="DotNetCurry's Official Github Account"></a>
+                            </div>
+
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li class="dropdown megamenu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <span class="fa fa-angle-down"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <h5>ASP.NET</h5>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/aspnet">ASP.NET</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/aspnet-mvc">ASP.NET MVC</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/aspnet-core">ASP.NET Core</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/sharepoint">SharePoint</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/aspnet-ajax" class="last">ASP.NET AJAX</a>
+                                                        <h5>Patterns and Practices</h5>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/software-gardening">Software Gardening</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/patterns-practices">Design Patterns</a>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <h5>.NET</h5>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/csharp">C#</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/visualstudio">Visual Studio</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/vsts-tfs">VSTS (Azure DevOps) &amp; TFS</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/linq">LINQ</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/entityframework">Entity Framework</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/dotnetframework">.NET Framework</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/dotnet-standard-core">.NET Standard &amp; .NET Core</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/wpf">WPF</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/wcf">WCF</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/winforms">WinForms</a>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <h5>Cloud and Mobile</h5>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/windows-azure">Microsoft Azure</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/devops">DevOps</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/xamarin">Xamarin</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/powershell">Powershell</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/machine-learning-ai">Machine Learning &amp; AI</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/windows-store">UWP &amp; Windows Store</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/windowsphone" class="last">Windows Phone</a>
+                                                        <h5>Useful</h5>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/dotnetinterview">.NET Interview Q&amp;A</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/product-articles-review">Product Reviews</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/general-programming-topics">General Topics</a>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <h5>JavaScript</h5>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/jquery-aspnet">jQuery</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/angularjs">Angular</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/typescript">TypeScript</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/nodejs">Node.js</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/reactjs">React.js</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/backbonejs">Backbone.js</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/html5-javascript">HTML5 &amp; JavaScript</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/bootstrap-css">Bootstrap &amp; CSS</a>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <h5>Publications</h5>
+                                                        <a href="http://www.jquerycookbook.com/" rel="nofollow" target="_blank">Books</a>
+                                                        <a href="https://www.dotnetcurry.com/magazine/" class="last">Magazines</a>
+
+                                                        <h5>Older Technologies</h5>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/silverlight">Silverlight</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/expression-web">Expression Web</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/expression-blend">Expression Blend</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/windows-vista">Windows Vista</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/microsoft-word">Word 2007</a>
+                                                        <a href="https://www.dotnetcurry.com/tutorials/microsoft-outlook">Outlook 2007</a>
+                                                        <a href="#"></a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="dropdown megamenu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Featured <span class="fa fa-angle-down"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-md-3 col-xs-12">
+                                                        <div class="header-post">
+                                                            <a href="https://www.dotnetcurry.com/angular/1385/angular-4-cheat-sheet">
+                                                                <div class="hp-thumb">
+                                                                    <img data-src="/img/header/1385.jpg" class="img-responsive lazyloaded" alt="" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/1385.jpg">
+                                                                </div>
+                                                            </a>
+
+                                                            <date>Aug 30, 2017</date>
+                                                            <h4><a href="https://www.dotnetcurry.com/angular/1385/angular-4-cheat-sheet">Angular 4 Development Cheat Sheet</a></h4>
+                                                            <p class="hidden-xs">A quick reference guide to get you going with Angular development. It uses Angular v4 with TypeScript.</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3 col-xs-12">
+                                                        <div class="header-post">
+                                                            <a href="https://www.dotnetcurry.com/patterns-practices/1364/error-handling-dotnet-projects">
+                                                                <div class="hp-thumb">
+                                                                    <!-- <div class="hp-overlay">
+                                                        <img src="img/header/gallery.png" alt=""/>
+                                                        <span>12 Photos</span>
+                                                    </div> -->
+                                                                    <img data-src="/img/header/1364.jpg" class="img-responsive lazyloaded" alt="" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/1364.jpg">
+                                                                </div>
+                                                            </a>
+
+                                                            <date>May 12, 2017</date>
+                                                            <h4><a href="https://www.dotnetcurry.com/patterns-practices/1364/error-handling-dotnet-projects">Error Handling in Large .NET Projects - Best Practices</a></h4>
+                                                            <p class="hidden-xs">Learn some effective error handling strategies that you can use in your .NET projects.</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3 col-xs-12">
+                                                        <div class="header-post">
+                                                            <a href="https://www.dotnetcurry.com/patterns-practices/1375/behavior-driven-development-bdd">
+                                                                <div class="hp-thumb">
+                                                                    <img data-src="/img/header/1375.jpg" class="img-responsive lazyloaded" alt="" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/1375.jpg">
+                                                                </div>
+                                                            </a>
+                                                            <date>July 3, 2017</date>
+                                                            <h4><a href="https://www.dotnetcurry.com/patterns-practices/1375/behavior-driven-development-bdd">Behavior Driven Development (BDD) – an in-depth look</a></h4>
+                                                            <p class="hidden-xs">Learn how Behavior Driven Development (BDD) works with a real-world example of how to use it.</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3 col-xs-12">
+                                                        <div class="header-post">
+                                                            <a href="https://www.dotnetcurry.com/patterns-practices/1305/aspect-oriented-programming-aop-csharp-using-solid">
+                                                                <div class="hp-thumb">
+                                                                    <img data-src="/img/header/1305.jpg" class="img-responsive lazyloaded" alt="" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/1305.jpg">
+                                                                </div>
+                                                            </a>
+
+                                                            <date>Sep 25, 2016</date>
+                                                            <h4><a href="https://www.dotnetcurry.com/patterns-practices/1305/aspect-oriented-programming-aop-csharp-using-solid">Aspect Oriented Programming (AOP) in C# with SOLID</a></h4>
+                                                            <p class="hidden-xs">Aspect Oriented Programming (AOP) in C# using SOLID principles, with challenges and solutions.</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3 col-xs-12">
+                                                        <div class="header-post">
+                                                            <a href="https://www.dotnetcurry.com/javascript/1359/javascript-frameworks-aspnet-mvc-developer">
+                                                                <div class="hp-thumb">
+                                                                    <img data-src="/img/header/1359.jpg" class="img-responsive lazyloaded" alt="" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/1359.jpg">
+                                                                </div>
+                                                            </a>
+
+                                                            <date>Sep 25, 2016</date>
+                                                            <h4><a href="https://www.dotnetcurry.com/javascript/1359/javascript-frameworks-aspnet-mvc-developer">JavaScript Frameworks for ASP.NET MVC Developers</a></h4>
+                                                            <p class="hidden-xs">Learn about a few JavaScript frameworks, and which one will be a good fit in your ASP.NET MVC apps</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="dropdown megamenu">
+                                        <a href="https://www.dotnetcurry.com/magazine/">.NET Magazines</a>
+                                    </li>
+
+                                    <li class="dropdown dropdown-v1">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About<span class="fa fa-angle-down"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="https://www.dotnetcurry.com/About.aspx">About Us</a></li>
+                                            <li><a href="https://www.dotnetcurry.com/WriteForUs.aspx">Write For Us</a></li>
+                                            <li><a href="https://www.dotnetcurry.com/Contact.aspx">Contact Us</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown megamenu">
+                                        <a href="https://www.dotnetcurry.net/s/dnc-products" rel="nofollow" target="_blank">Developer Tools</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.navbar-collapse -->
+                    </div>
+                </nav>
+            </header>
+            <!--header-->
+
+            <!-- container -->
+            <div class="container">           
+
+	            <div class="clearfix divborder">              
+
+		                <div class="col-md-8 column">
+                             
+     <div class="col-md-12 articlebox row">
+            <div class="articletitle">
+                   <h1 class="articlehead">
+                     <span id="ctl00_MainContent_lblTitle">Using EF Core in ASP.NET Core Web API for performing CRUD operations</span>   
+                    </h1>
+                          
+
+ 
+                     
+    
+                        <b>Posted by: </b> <a id="ctl00_MainContent_lnkAddedBy" href="https://www.dotnetcurry.com/Author.aspx?AuthorName=Mahesh%20Sabnis">Mahesh Sabnis</a> , 
+                    on 2/27/2017, 
+                    in <b> Category </b> <a id="ctl00_MainContent_lnkCategory" href="https://www.dotnetcurry.com/BrowseArticles.aspx?CatID=71">Entity Framework</a> 
+                    <br>
+            </div>
+       
+            <div class="articlestats">
+                    <div class="stats1">
+                        <b>Views: </b>
+                    51019   <br>   
+                    </div> 
+            </div>
+
+            <div class="articleabstract">
+                <b>Abstract: </b> This article explains how to use Entity Framework (EF) Core in ASP.NET Core Web API for performing CRUD operations.
+            </div>
+
+           <div class="socialshare"><div class="socialshare">
+                <a class="resp-sharing-button__link" id="fbsharelinktop" target="_blank" aria-label="" rel="nofollow" href="https://facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.dotnetcurry.com%2Fentityframework%2F1348%2Fef-core-web-api-crud-operations">
+                  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+                    <svg version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+                        <g>
+                            <path d="M18.768,7.465H14.5V5.56c0-0.896,0.594-1.105,1.012-1.105s2.988,0,2.988,0V0.513L14.171,0.5C10.244,0.5,9.5,3.438,9.5,5.32 v2.145h-3v4h3c0,5.212,0,12,0,12h5c0,0,0-6.85,0-12h3.851L18.768,7.465z"></path>
+                        </g>
+                    </svg>
+                      <span>690</span>
+                    </div>
+                  </div>
+                </a>
+
+                <a class="resp-sharing-button__link" id="twtsharelinktop" target="_blank" aria-label="" rel="nofollow" href="https://twitter.com/intent/tweet/?text=Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%7C%20DotNetCurry&amp;url=https%3A%2F%2Fwww.dotnetcurry.com%2Fentityframework%2F1348%2Fef-core-web-api-crud-operations">
+                  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+                    <svg version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+                        <g>
+                            <path d="M23.444,4.834c-0.814,0.363-1.5,0.375-2.228,0.016c0.938-0.562,0.981-0.957,1.32-2.019c-0.878,0.521-1.851,0.9-2.886,1.104 C18.823,3.053,17.642,2.5,16.335,2.5c-2.51,0-4.544,2.036-4.544,4.544c0,0.356,0.04,0.703,0.117,1.036 C8.132,7.891,4.783,6.082,2.542,3.332C2.151,4.003,1.927,4.784,1.927,5.617c0,1.577,0.803,2.967,2.021,3.782 C3.203,9.375,2.503,9.171,1.891,8.831C1.89,8.85,1.89,8.868,1.89,8.888c0,2.202,1.566,4.038,3.646,4.456 c-0.666,0.181-1.368,0.209-2.053,0.079c0.579,1.804,2.257,3.118,4.245,3.155C5.783,18.102,3.372,18.737,1,18.459 C3.012,19.748,5.399,20.5,7.966,20.5c8.358,0,12.928-6.924,12.928-12.929c0-0.198-0.003-0.393-0.012-0.588 C21.769,6.343,22.835,5.746,23.444,4.834z"></path>
+                        </g>
+                    </svg>
+                      <span>38</span>
+                    </div>
+                  </div>
+                </a>
+
+               <a class="resp-sharing-button__link" id="linkdinsharelinktop" target="_blank" aria-label="" rel="nofollow" href="https://www.linkedin.com/shareArticle?mini=true&amp;amp;url=https%3A%2F%2Fwww.dotnetcurry.com%2Fentityframework%2F1348%2Fef-core-web-api-crud-operations&amp;title=Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%7C%20DotNetCurry">
+                  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+                    <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"></path></svg>
+                    <span>12</span>
+                   </div>
+                  </div>
+                </a>
+
+                <!--<a class="resp-sharing-button__link" id="googsharelinktop" target="_blank" aria-label="">
+                  <div class="resp-sharing-button resp-sharing-button--google resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+                    <svg version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+                        <g>
+                            <path d="M11.366,12.928c-0.729-0.516-1.393-1.273-1.404-1.505c0-0.425,0.038-0.627,0.988-1.368 c1.229-0.962,1.906-2.228,1.906-3.564c0-1.212-0.37-2.289-1.001-3.044h0.488c0.102,0,0.2-0.033,0.282-0.091l1.364-0.989 c0.169-0.121,0.24-0.338,0.176-0.536C14.102,1.635,13.918,1.5,13.709,1.5H7.608c-0.667,0-1.345,0.118-2.011,0.347 c-2.225,0.766-3.778,2.66-3.778,4.605c0,2.755,2.134,4.845,4.987,4.91c-0.056,0.22-0.084,0.434-0.084,0.645 c0,0.425,0.108,0.827,0.33,1.216c-0.026,0-0.051,0-0.079,0c-2.72,0-5.175,1.334-6.107,3.32C0.623,17.06,0.5,17.582,0.5,18.098 c0,0.501,0.129,0.984,0.382,1.438c0.585,1.046,1.843,1.861,3.544,2.289c0.877,0.223,1.82,0.335,2.8,0.335 c0.88,0,1.718-0.114,2.494-0.338c2.419-0.702,3.981-2.482,3.981-4.538C13.701,15.312,13.068,14.132,11.366,12.928z M3.66,17.443 c0-1.435,1.823-2.693,3.899-2.693h0.057c0.451,0.005,0.892,0.072,1.309,0.2c0.142,0.098,0.28,0.192,0.412,0.282 c0.962,0.656,1.597,1.088,1.774,1.783c0.041,0.175,0.063,0.35,0.063,0.519c0,1.787-1.333,2.693-3.961,2.693 C5.221,20.225,3.66,19.002,3.66,17.443z M5.551,3.89c0.324-0.371,0.75-0.566,1.227-0.566l0.055,0 c1.349,0.041,2.639,1.543,2.876,3.349c0.133,1.013-0.092,1.964-0.601,2.544C8.782,9.589,8.363,9.783,7.866,9.783H7.865H7.844 c-1.321-0.04-2.639-1.6-2.875-3.405C4.836,5.37,5.049,4.462,5.551,3.89z"/>
+                            <polygon points="23.5,9.5 20.5,9.5 20.5,6.5 18.5,6.5 18.5,9.5 15.5,9.5 15.5,11.5 18.5,11.5 18.5,14.5 20.5,14.5 20.5,11.5  23.5,11.5 	"/>
+                        </g>
+                    </svg>
+                    </div>
+                  </div>
+                </a>-->
+
+          </div></div>
+      </div>
+         
+      <div id="articleBody" class="col-md-12 row">
+        <p>The Web API component of the application acts as an HTTP 
+based interface which accepts HTTP requests from a third party client 
+application and performs data operations. The following diagram tries to
+ explain the possible architecture of this hypothetical application 
+using Web API.</p>
+<p id="ef" class="articlead">&nbsp;<a target="_blank" href="http://www.dotnetcurry.com/magazine/">Are you a developer who loves reading .NET/JavaScript magazines? Subscribe for Free.</a></p>
+<p><img title="webapi-efcore-architecture" alt="webapi-efcore-architecture" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/webapi-efcore-architecture.png" width="1386" height="763" border="0"></p>
+<p><em>Figure 1: WebAPI with EFCore Application Architecture</em></p>
+<p>This application can expose its business logic to the various client 
+applications using Web API. Web API can effectively use the repositories
+ to decouple the Business and Data Access Layers from the Web API 
+Controller class. The Web API application can use inbuilt Dependency 
+Injection (DI) to inject required dependencies in objects. For e.g. The 
+Data Access can be registered in the DI and can be injected in the 
+Business Layer, further the Business Layer can be registered in DI and 
+injected in the Repository, and Repository in the Web API.</p>
+<p>This article explains how to use EF Core in Web API for performing CRUD operations.</p>
+<p>Entity Framework Core is a lightweight Data Access Technology provided on .NET Core. If you are new to EF Core, read <a href="https://www.dotnetcurry.com/entityframework/1347/entity-framework-ef-core-tutorial">https://www.dotnetcurry.com/entityframework/1347/entity-framework-ef-core-tutorial</a></p>
+<p><b>Step 1: </b>Open Visual Studio 2015 and create a new ASP.NET Core Web application as shown in the following image:</p>
+<p><img title="webapi-core-new-project" alt="webapi-core-new-project" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/webapi-core-new-project.png" width="974" height="552" border="0"></p>
+<p>Name this application as WebApi_With_EFCore. Click on the <b>OK </b>Button, the following window will be displayed. Select Web API template from a list of ASP.NET Core templates.</p>
+<p><img title="webapi-template" alt="webapi-template" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/webapi-template.png" width="973" height="763" border="0"></p>
+<p>Doing so will create a Web API application.</p>
+<p><b>Step 2: </b>The Application uses EF Core with a Sql Server database. This requires an installation of EF Core and Sql Server Packages.</p>
+<div><div id="highlighter_627756" class="syntaxhighlighter nogutter  ps "><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="ps plain">Install-Package Microsoft.EntityFrameworkCore.SqlServer</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="ps plain">Install-Package Microsoft.EntityFrameworkCore.Tools –Pre</code></div></div></td></tr></tbody></table></div></div>
+<p>These packages are used to provide EF Core database migration so that Database tables can be generated from the Entity.</p>
+<p><b>Step 3: </b>In the project, add a new folder named ’Models’. In 
+this folder, add a new class file of the name ModelClasses.cs which will
+ contain an Entity class as shown in the following code:</p>
+<div><div id="highlighter_866360" class="syntaxhighlighter nogutter  csharp"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp keyword">using</code> <code class="csharp plain">System.ComponentModel.DataAnnotations;</code></div><div class="line number2 index1 alt1"><code class="csharp keyword">using</code> <code class="csharp plain">System.ComponentModel.DataAnnotations.Schema;</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="csharp keyword">namespace</code> <code class="csharp plain">WebApi_With_EFCore.Models</code></div><div class="line number5 index4 alt2"><code class="csharp plain">{</code></div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">class</code> <code class="csharp plain">Book</code></div><div class="line number7 index6 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number8 index7 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[Key]</code></div><div class="line number9 index8 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[DatabaseGenerated(DatabaseGeneratedOption.None)]</code></div><div class="line number10 index9 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">int</code> <code class="csharp plain">Id { </code><code class="csharp keyword">get</code><code class="csharp plain">; </code><code class="csharp keyword">set</code><code class="csharp plain">; }</code></div><div class="line number11 index10 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[Required (ErrorMessage =</code><code class="csharp string">"Book Title Must be provided"</code><code class="csharp plain">)]</code></div><div class="line number12 index11 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[StringLength(50, MinimumLength = 2)]</code></div><div class="line number13 index12 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">string</code> <code class="csharp plain">BookTitle { </code><code class="csharp keyword">get</code><code class="csharp plain">; </code><code class="csharp keyword">set</code><code class="csharp plain">; }</code></div><div class="line number14 index13 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[Required(ErrorMessage = </code><code class="csharp string">"Please provide Author Name"</code><code class="csharp plain">)]</code></div><div class="line number15 index14 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[StringLength(100, MinimumLength = 2, ErrorMessage =</code><code class="csharp string">"Length must be within 2 to 100 characters"</code><code class="csharp plain">)]</code></div><div class="line number16 index15 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">string</code> <code class="csharp plain">AuthorName { </code><code class="csharp keyword">get</code><code class="csharp plain">; </code><code class="csharp keyword">set</code><code class="csharp plain">; }</code></div><div class="line number17 index16 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[Required(ErrorMessage = </code><code class="csharp string">"Publisher Name is must"</code><code class="csharp plain">)]</code></div><div class="line number18 index17 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[StringLength(100, MinimumLength = 2,ErrorMessage =</code><code class="csharp string">"Must be with 2 to 100 characters"</code><code class="csharp plain">)]</code></div><div class="line number19 index18 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">string</code> <code class="csharp plain">Publisher { </code><code class="csharp keyword">get</code><code class="csharp plain">; </code><code class="csharp keyword">set</code><code class="csharp plain">; }</code></div><div class="line number20 index19 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">string</code> <code class="csharp plain">Genre { </code><code class="csharp keyword">get</code><code class="csharp plain">; </code><code class="csharp keyword">set</code><code class="csharp plain">; }</code></div><div class="line number21 index20 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[Required(ErrorMessage = </code><code class="csharp string">"Book Price is must"</code><code class="csharp plain">)]</code></div><div class="line number22 index21 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[DataType(DataType.Currency)]</code></div><div class="line number23 index22 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[Range(1, 999,ErrorMessage =</code><code class="csharp string">"Must be with range from 1 to 999"</code><code class="csharp plain">)]</code></div><div class="line number24 index23 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">int</code> <code class="csharp plain">Price { </code><code class="csharp keyword">get</code><code class="csharp plain">; </code><code class="csharp keyword">set</code><code class="csharp plain">; }</code></div><div class="line number25 index24 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number26 index25 alt1"><code class="csharp plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>The above ‘Book’ class has an Id property which is applied with <b>Key </b>and <b>DatabaseGenerated </b>attributes. The <b>DatabaseGeneratedOptions</b> is set to <b>None, </b>which means that it<b> </b>will be used as an explicitly entered primary key. The other properties of the class are applied with validation attributes.</p>
+<p><b>Step 4: </b>In the Model folder, add a new class file of the name AppContext.cs. This class file contains the following code:</p>
+<div><div id="highlighter_578343" class="syntaxhighlighter nogutter  csharp   "><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp keyword">using</code> <code class="csharp plain">Microsoft.EntityFrameworkCore;</code></div><div class="line number2 index1 alt1"><code class="csharp keyword">namespace</code> <code class="csharp plain">WebApi_With_EFCore.Models</code></div><div class="line number3 index2 alt2"><code class="csharp plain">{</code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number5 index4 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">class</code> <code class="csharp plain">ApplicationContext : DbContext</code></div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number7 index6 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp plain">ApplicationContext(DbContextOptions opts):</code><code class="csharp keyword">base</code><code class="csharp plain">(opts)</code></div><div class="line number8 index7 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number9 index8 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number10 index9 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp plain">DbSet&lt; Book &gt; Books { </code><code class="csharp keyword">get</code><code class="csharp plain">; </code><code class="csharp keyword">set</code><code class="csharp plain">; }</code></div><div class="line number11 index10 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">protected</code> <code class="csharp keyword">override</code> <code class="csharp keyword">void</code> <code class="csharp plain">OnConfiguring(DbContextOptionsBuilder optionsBuilder)</code></div><div class="line number12 index11 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number13 index12 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number14 index13 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number15 index14 alt2"><code class="csharp plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>The <b>ApplicationContext</b> class is derived from the <b>DbContext </b>class. The DbContext class is used to manage Database connection and transaction over the mapped table using <b>DbSet<t></t></b>. The parameterized constructor accepts DbContextOptions class which is used when the migration commands are executed.</p>
+<p><b>Step 5: </b>Open SQL Server and create a new database of the name <b>WebApiEfCore </b>using the following command:</p>
+<div><div id="highlighter_858605" class="syntaxhighlighter nogutter  ps"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="ps plain">Create database WebApiEfCore</code></div></div></td></tr></tbody></table></div></div>
+<p><b>Step 6: </b>To define the connection string with the database so 
+that it can be used by EF Core, add the following entry in the 
+appsettings.json file.</p>
+<div><div id="highlighter_887019" class="syntaxhighlighter nogutter  js"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js string">"Data"</code><code class="js plain">: {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"DefaultConnection"</code><code class="js plain">: {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"ConnectionString"</code><code class="js plain">: </code><code class="js string">"Server=.;Database=WebApiEfCore;Trusted_Connection=True;"</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number5 index4 alt2"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p><b>Step 7: </b>As per Figure 1,<b> </b>the application uses 
+repositories to isolate the Data Access code from the Web Api controller
+ class. To implement this isolation, add a new folder of name 
+‘Repositories’<b> </b>in the application. Add a new class file of name DataAccessRepositories.cs in it which contains the following code:</p>
+<div><div id="highlighter_352824" class="syntaxhighlighter nogutter  csharp"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp keyword">using</code> <code class="csharp plain">System.Collections.Generic;</code></div><div class="line number2 index1 alt1"><code class="csharp keyword">using</code> <code class="csharp plain">System.Linq;</code></div><div class="line number3 index2 alt2"><code class="csharp keyword">using</code> <code class="csharp plain">WebApi_With_EFCore.Models;</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="csharp keyword">namespace</code> <code class="csharp plain">WebApi_With_EFCore.Repositories</code></div><div class="line number6 index5 alt1"><code class="csharp plain">{</code></div><div class="line number7 index6 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">interface</code> <code class="csharp plain">IDataAccess&lt; TEntity,U &gt; where TEntity : </code><code class="csharp keyword">class</code></div><div class="line number8 index7 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number9 index8 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">IEnumerable&lt; TEntity &gt; GetBooks();</code></div><div class="line number10 index9 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">TEntity GetBook(U id);</code></div><div class="line number11 index10 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">int</code> <code class="csharp plain">AddBook(TEntity b);</code></div><div class="line number12 index11 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">int</code> <code class="csharp plain">UpdateBook(U id,TEntity b);</code></div><div class="line number13 index12 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">int</code> <code class="csharp plain">DeleteBook(U id); </code></div><div class="line number14 index13 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">class</code> <code class="csharp plain">DataAccessRepository : IDataAccess&lt; Book, </code><code class="csharp keyword">int</code> <code class="csharp plain">&gt;</code></div><div class="line number17 index16 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number18 index17 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">ApplicationContext ctx;</code></div><div class="line number19 index18 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp plain">DataAccessRepository(ApplicationContext c)</code></div><div class="line number20 index19 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number21 index20 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">ctx = c;</code></div><div class="line number22 index21 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number23 index22 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">int</code> <code class="csharp plain">AddBook(Book b)</code></div><div class="line number24 index23 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number25 index24 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">ctx.Books.Add(b);</code></div><div class="line number26 index25 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">int</code> <code class="csharp plain">res = ctx.SaveChanges();</code></div><div class="line number27 index26 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">return</code> <code class="csharp plain">res;</code></div><div class="line number28 index27 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number29 index28 alt2">&nbsp;</div><div class="line number30 index29 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">int</code> <code class="csharp plain">DeleteBook(</code><code class="csharp keyword">int</code> <code class="csharp plain">id)</code></div><div class="line number31 index30 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number32 index31 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">int</code> <code class="csharp plain">res = 0;</code></div><div class="line number33 index32 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">var book = ctx.Books.FirstOrDefault(b =&gt; b.Id == id);</code></div><div class="line number34 index33 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">if</code> <code class="csharp plain">(book != </code><code class="csharp keyword">null</code><code class="csharp plain">)</code></div><div class="line number35 index34 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number36 index35 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">ctx.Books.Remove(book);</code></div><div class="line number37 index36 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">res = ctx.SaveChanges();</code></div><div class="line number38 index37 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number39 index38 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">return</code> <code class="csharp plain">res;</code></div><div class="line number40 index39 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number41 index40 alt2">&nbsp;</div><div class="line number42 index41 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp plain">Book GetBook(</code><code class="csharp keyword">int</code> <code class="csharp plain">id)</code></div><div class="line number43 index42 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number44 index43 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">var book = ctx.Books.FirstOrDefault(b=&gt;b.Id==id);</code></div><div class="line number45 index44 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">return</code> <code class="csharp plain">book;</code></div><div class="line number46 index45 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number47 index46 alt2">&nbsp;</div><div class="line number48 index47 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp plain">IEnumerable&lt; Book &gt; GetBooks()</code></div><div class="line number49 index48 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number50 index49 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">var books = ctx.Books.ToList();</code></div><div class="line number51 index50 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">return</code> <code class="csharp plain">books;</code></div><div class="line number52 index51 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number53 index52 alt2">&nbsp;</div><div class="line number54 index53 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">int</code> <code class="csharp plain">UpdateBook(</code><code class="csharp keyword">int</code> <code class="csharp plain">id,Book b)</code></div><div class="line number55 index54 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number56 index55 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">int</code> <code class="csharp plain">res = 0;</code></div><div class="line number57 index56 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">var book = ctx.Books.Find(id);</code></div><div class="line number58 index57 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">if</code> <code class="csharp plain">(book != </code><code class="csharp keyword">null</code><code class="csharp plain">)</code></div><div class="line number59 index58 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number60 index59 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">book.BookTitle = b.BookTitle;</code></div><div class="line number61 index60 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">book.AuthorName = b.AuthorName;</code></div><div class="line number62 index61 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">book.Publisher = b.Publisher;</code></div><div class="line number63 index62 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">book.Genre = b.Genre;</code></div><div class="line number64 index63 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">book.Price = b.Price; </code></div><div class="line number65 index64 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">res = ctx.SaveChanges();</code></div><div class="line number66 index65 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number67 index66 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">return</code> <code class="csharp plain">res;</code></div><div class="line number68 index67 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number69 index68 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number70 index69 alt1"><code class="csharp plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>The above code contains an interface of the name ‘IDataAccess’. This 
+is a generic interface which declares methods for performing CRUD 
+operations. The interface is implemented by the DataAccessrepository 
+class and implements all methods of an interface. The code uses the 
+ApplicationContext class for performing database operations. The code is
+ quite similar to EF 6.x code. The ‘ApplicationContext’ class is passed 
+as dependency to the DataAccessRepository class.</p>
+<p>So the question that arises is <b>Where are the dependencies registered?</b></p>
+<h5>Registering all the required Dependencies</h5>
+<p><b>Step 8: </b>To read the database connection string and to register
+ all the required dependencies in DI, open Startup.cs and make the 
+following changes in the ConfigureServices methods (highlighted):</p>
+<div><div id="highlighter_539964" class="syntaxhighlighter nogutter  csharp"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp keyword">public</code> <code class="csharp keyword">void</code> <code class="csharp plain">ConfigureServices(IServiceCollection services)</code></div><div class="line number2 index1 alt1"><code class="csharp plain">{</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">services.AddDbContext&lt; ApplicationContext &gt;(opts=&gt;</code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">opts.UseSqlServer(Configuration[</code><code class="csharp string">"Data:DefaultConnection:ConnectionString"</code><code class="csharp plain">]));</code></div><div class="line number5 index4 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">services.AddSingleton(</code><code class="csharp keyword">typeof</code><code class="csharp plain">(IDataAccess&lt; Book, </code><code class="csharp keyword">int</code> <code class="csharp plain">&gt;), </code><code class="csharp keyword">typeof</code><code class="csharp plain">(DataAccessRepository));</code></div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">services.AddMvc();</code></div><div class="line number7 index6 alt2"><code class="csharp plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>The DI container registers DataAccessRepository class as a Singleton. The <b>AddDbContext</b> method<b> </b>uses
+ the ApplicationContext class for injecting it in the DI container. This
+ method further uses SQL Server connection string to map with the SQL 
+Server database. Here the important point is that the AddDbContext uses a
+ Lambda Expression which is the <b>DbContextOptionsBuilder </b>object. This object is further used when the migration commands are executed.</p>
+<p><b>Step 9: </b>Open the Package Manager Console using Tools &gt; 
+NuGet Package Manager &gt; Package Manager Console and run the following
+ commands for migration:</p>
+<div><div id="highlighter_85739" class="syntaxhighlighter nogutter  ps"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="ps functions">Add-Migration</code> <code class="ps plain">WebApi_With_EFCore.Models.ApplicationContext</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="ps functions">Update-database</code></div></div></td></tr></tbody></table></div></div>
+<p>as shown in the following image:</p>
+<p><img title="commands-packages" alt="commands-packages" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/commands-packages.png" width="695" height="145" border="0"></p>
+<p>These commands will add the <b>Migrations</b> folder in the project 
+with classes containing code for Table generation. This will generate 
+Books table in the WebApiEfCore database.</p>
+<p><b>Step 10: </b>In the Controllers folder, add a new Web Api Controller of the name BookAPIController as shown in the following image:</p>
+<p><img title="aspnet-core-webapi-controller" alt="aspnet-core-webapi-controller" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/aspnet-core-webapi-controller.png" width="974" height="549" border="0"></p>
+<p>The BookAPIController class has the base class as a <b>Controller</b>, which is entirely different from the earlier version of Web API where the base class was <b>ApiController </b>class. This means that the MVC Controller and API Controllers has the same pipeline for request processing.</p>
+<p>In this API controller, add the following code:</p>
+<div><div id="highlighter_716955" class="syntaxhighlighter nogutter  csharp"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp keyword">using</code> <code class="csharp plain">System.Collections.Generic;</code></div><div class="line number2 index1 alt1"><code class="csharp keyword">using</code> <code class="csharp plain">Microsoft.AspNetCore.Mvc;</code></div><div class="line number3 index2 alt2"><code class="csharp keyword">using</code> <code class="csharp plain">WebApi_With_EFCore.Models;</code></div><div class="line number4 index3 alt1"><code class="csharp keyword">using</code> <code class="csharp plain">WebApi_With_EFCore.Repositories;</code></div><div class="line number5 index4 alt2">&nbsp;</div><div class="line number6 index5 alt1"><code class="csharp keyword">namespace</code> <code class="csharp plain">WebApi_With_EFCore.Controllers</code></div><div class="line number7 index6 alt2"><code class="csharp plain">{</code></div><div class="line number8 index7 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">[Route(</code><code class="csharp string">"api/[controller]"</code><code class="csharp plain">)]</code></div><div class="line number9 index8 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">public</code> <code class="csharp keyword">class</code> <code class="csharp plain">BookAPIController : Controller</code></div><div class="line number10 index9 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number11 index10 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">IDataAccess</code></div></div></td></tr></tbody></table></div></div>
+<p>In the above code, the BookAPIController class contains a constructor
+ with IDataAccess interface passed to it as dependency. This provides an
+ instance of DataAccessRepository class to the controller class for 
+performing CRUD operations.</p>
+<p><b>Step 11: </b>To launch the API, update the launchSettings.json file on the ‘Properties’ folder of the application (highlighted):</p>
+<div><div id="highlighter_296076" class="syntaxhighlighter nogutter  js"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js string">"profiles"</code><code class="js plain">: {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"IIS Express"</code><code class="js plain">: {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"commandName"</code><code class="js plain">: </code><code class="js string">"IISExpress"</code><code class="js plain">,</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"launchBrowser"</code><code class="js plain">: </code><code class="js keyword">true</code><code class="js plain">,</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"launchUrl"</code><code class="js plain">: </code><code class="js string">"api/BookAPI"</code><code class="js plain">,</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"environmentVariables"</code><code class="js plain">: {</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"ASPNETCORE_ENVIRONMENT"</code><code class="js plain">: </code><code class="js string">"Development"</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number9 index8 alt2"><code class="js plain">},</code></div></div></td></tr></tbody></table></div></div>
+<p>Build the project and make sure that it is error free.</p>
+<p><b>Step 12: </b>Run the application. This application can be tested using Fiddler (or any other REST client)</p>
+<p><b>POST request</b></p>
+<p>In Fiddler, add the URL and request body as show in the following image</p>
+<p><img title="post-request" alt="post-request" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/post-request.png" width="1350" height="756" border="0"></p>
+<p>This will add new record in the Books table in the WebApiEfCore 
+database. When a GET Request is made using the browser, the response 
+received is as follows:</p>
+<p><img title="get-request" alt="get-request" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/get-request.png" width="1000" height="25" border="0"></p>
+<p>Likewise, PUT and DELETE requested can also be tested.</p>
+<p><b>Conclusion: </b>Web API in ASP.NET Core effectively makes use of 
+the DependencyInjection (DI) feature using which the Data Access code 
+implemented using EF Core can be isolated from the action method of the 
+Api Controller class.</p>
+<p><a href="https://github.com/dotnetcurry/efcore-asp.net-core-crud" rel="nofollow" target="_blank"><strong>Download the entire source code</strong></a> of this article (Github)</p>
+<div id="csharpbook" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 articletext">
+        <div class="col-md-3 col-sm-3 col-xs-4">
+            <img alt="Absolutely Awesome Book on C# and .NET" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/csharp-book-ad.jpg">
+		</div>
+		<div class="col-md-9 col-sm-9 col-xs-8">
+			<p>C# and .NET have been around for a very long time, but their constant growth means there’s always more to learn.</p>
+            <p>We at DotNetCurry are very excited to announce the <strong><a href="http://www.dotnetcurry.org/r/dnc-csharpbk-web-textad-solid" target="_blank" rel="nofollow">The Absolutely Awesome Book on C# and .NET</a></strong>. This is a 500 pages concise technical eBook available in PDF, ePub (iPad), and Mobi (Kindle). </p><p>Organized around concepts, this eBook aims to provide a concise, yet solid foundation in C# and .NET, covering <b>C# 6.0, C# 7.0 and .NET Core</b>.
+ Use these concepts to deepen your existing knowledge of C# and .NET, to
+ learn new features or to crack your next .NET Interview.</p>
+            <p><strong><a href="http://www.dotnetcurry.org/r/dnc-csharpbk-web-textad-solid" target="_blank" style="color:#cd282f" rel="nofollow">Click here to Purchase this eBook at a Discounted Price!</a><a rel="nofollow" target="_blank"></a></strong></p><a rel="nofollow" target="_blank">
+		</a></div><a rel="nofollow" target="_blank"> 
+      </a></div><a rel="nofollow" target="_blank">
+          <div class="footerheading margin-top-20">What Others Are Reading!</div>
+          </a><div class="col-xs-12 col-sm-12 col-md-12 similarauthor"><a rel="nofollow" target="_blank">  
+                </a><div class="row"><a rel="nofollow" target="_blank">
+                    </a><div class="col-md-12 similararticles"><a rel="nofollow" target="_blank">
+                                  
+                    </a><a href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1398" style="color:#4A75AD;font-weight:normal;">Entity Framework Core (EF Core) 2.0 – New Cool Features</a>
+                     <br><br>
+                              
+                    <a href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1389" style="color:#4A75AD;font-weight:normal;">The State of Entity Framework Core - Past, Present and Future</a>
+                     <br><br>
+                              
+                    <a href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1347" style="color:#4A75AD;font-weight:normal;">Entity Framework Core Tutorial</a>
+                     <br><br>
+                              
+                    <a href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1170" style="color:#4A75AD;font-weight:normal;">Using TransactionScope across Databases using ADO.NET Entity Framework and ASP.NET MVC</a>
+                     <br><br>
+                              
+                    <a href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1101" style="color:#4A75AD;font-weight:normal;">Entity Framework 6.1 – Some New Features via an ASP.NET MVC application</a>
+                     <br><br>
+                              
+                    <a href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=945" style="color:#4A75AD;font-weight:normal;">Improved Transactions in Entity Framework 6</a>
+                     <br><br>
+                    
+
+
+
+<span id="ctl00_MainContent_SimilarPosts1_lblCategoNam"></span>
+
+        
+        
+     
+
+                    </div>
+                </div>              
+          </div>  
+		<!-- DNC_BottomText -->
+          <div class="visible-xs visible-sm visible-md visible-lg">
+		    <div id="dnc-bot-txtad" class="articletext">	
+
+		    <a href="http://www.dotnetcurry.net/s/dncmag" rel="nofollow" target="_blank">.NET/JavaScript Developer? Click here to Download our Free magazines.</a></div>
+        </div>
+          <div class="socialbox">
+<b>Was this article worth reading? Share it with fellow developers too. Thanks!</b>
+<br>
+		<!-- Sharingbutton Facebook -->
+<a class="resp-sharing-button__link" id="fbsharelink" target="_blank" aria-label="Share on Facebook" rel="nofollow" href="https://facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.dotnetcurry.com%2Fentityframework%2F1348%2Fef-core-web-api-crud-operations">
+  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--large"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+        <g>
+            <path d="M18.768,7.465H14.5V5.56c0-0.896,0.594-1.105,1.012-1.105s2.988,0,2.988,0V0.513L14.171,0.5C10.244,0.5,9.5,3.438,9.5,5.32 v2.145h-3v4h3c0,5.212,0,12,0,12h5c0,0,0-6.85,0-12h3.851L18.768,7.465z"></path>
+        </g>
+    </svg>
+    </div>Share on Facebook</div>
+</a>
+
+<!-- Sharingbutton Twitter -->
+
+<a class="resp-sharing-button__link" id="twtsharelink" target="_blank" aria-label="Share on Twitter" rel="nofollow" href="https://twitter.com/intent/tweet/?text=Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%7C%20DotNetCurry&amp;url=https%3A%2F%2Fwww.dotnetcurry.com%2Fentityframework%2F1348%2Fef-core-web-api-crud-operations">
+  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--large"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+        <g>
+            <path d="M23.444,4.834c-0.814,0.363-1.5,0.375-2.228,0.016c0.938-0.562,0.981-0.957,1.32-2.019c-0.878,0.521-1.851,0.9-2.886,1.104 C18.823,3.053,17.642,2.5,16.335,2.5c-2.51,0-4.544,2.036-4.544,4.544c0,0.356,0.04,0.703,0.117,1.036 C8.132,7.891,4.783,6.082,2.542,3.332C2.151,4.003,1.927,4.784,1.927,5.617c0,1.577,0.803,2.967,2.021,3.782 C3.203,9.375,2.503,9.171,1.891,8.831C1.89,8.85,1.89,8.868,1.89,8.888c0,2.202,1.566,4.038,3.646,4.456 c-0.666,0.181-1.368,0.209-2.053,0.079c0.579,1.804,2.257,3.118,4.245,3.155C5.783,18.102,3.372,18.737,1,18.459 C3.012,19.748,5.399,20.5,7.966,20.5c8.358,0,12.928-6.924,12.928-12.929c0-0.198-0.003-0.393-0.012-0.588 C21.769,6.343,22.835,5.746,23.444,4.834z"></path>
+        </g>
+    </svg>
+    </div>Share on Twitter</div>
+</a>
+
+<!-- Sharingbutton LinkedIn -->
+<a class="resp-sharing-button__link" id="linkdinsharelink" target="_blank" aria-label="Share on LinkedIn" rel="nofollow" href="https://www.linkedin.com/shareArticle?mini=true&amp;amp;url=https%3A%2F%2Fwww.dotnetcurry.com%2Fentityframework%2F1348%2Fef-core-web-api-crud-operations&amp;title=Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%7C%20DotNetCurry">
+  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--large"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"></path></svg>
+    </div>Share on LinkedIn</div>
+</a>
+
+<!-- Sharingbutton Google+ -->
+<a class="resp-sharing-button__link" id="googsharelink" target="_blank" aria-label="Share on Google+" rel="nofollow" href="https://plus.google.com/share?url=https%3A%2F%2Fwww.dotnetcurry.com%2Fentityframework%2F1348%2Fef-core-web-api-crud-operations">
+  <div class="resp-sharing-button resp-sharing-button--google resp-sharing-button--large"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+        <g>
+            <path d="M11.366,12.928c-0.729-0.516-1.393-1.273-1.404-1.505c0-0.425,0.038-0.627,0.988-1.368 c1.229-0.962,1.906-2.228,1.906-3.564c0-1.212-0.37-2.289-1.001-3.044h0.488c0.102,0,0.2-0.033,0.282-0.091l1.364-0.989 c0.169-0.121,0.24-0.338,0.176-0.536C14.102,1.635,13.918,1.5,13.709,1.5H7.608c-0.667,0-1.345,0.118-2.011,0.347 c-2.225,0.766-3.778,2.66-3.778,4.605c0,2.755,2.134,4.845,4.987,4.91c-0.056,0.22-0.084,0.434-0.084,0.645 c0,0.425,0.108,0.827,0.33,1.216c-0.026,0-0.051,0-0.079,0c-2.72,0-5.175,1.334-6.107,3.32C0.623,17.06,0.5,17.582,0.5,18.098 c0,0.501,0.129,0.984,0.382,1.438c0.585,1.046,1.843,1.861,3.544,2.289c0.877,0.223,1.82,0.335,2.8,0.335 c0.88,0,1.718-0.114,2.494-0.338c2.419-0.702,3.981-2.482,3.981-4.538C13.701,15.312,13.068,14.132,11.366,12.928z M3.66,17.443 c0-1.435,1.823-2.693,3.899-2.693h0.057c0.451,0.005,0.892,0.072,1.309,0.2c0.142,0.098,0.28,0.192,0.412,0.282 c0.962,0.656,1.597,1.088,1.774,1.783c0.041,0.175,0.063,0.35,0.063,0.519c0,1.787-1.333,2.693-3.961,2.693 C5.221,20.225,3.66,19.002,3.66,17.443z M5.551,3.89c0.324-0.371,0.75-0.566,1.227-0.566l0.055,0 c1.349,0.041,2.639,1.543,2.876,3.349c0.133,1.013-0.092,1.964-0.601,2.544C8.782,9.589,8.363,9.783,7.866,9.783H7.865H7.844 c-1.321-0.04-2.639-1.6-2.875-3.405C4.836,5.37,5.049,4.462,5.551,3.89z"></path>
+            <polygon points="23.5,9.5 20.5,9.5 20.5,6.5 18.5,6.5 18.5,9.5 15.5,9.5 15.5,11.5 18.5,11.5 18.5,14.5 20.5,14.5 20.5,11.5  23.5,11.5 	"></polygon>
+        </g>
+    </svg>
+    </div>Share on Google+</div>
+</a>
+		<!--<ul class="socialshare">
+			<li><div class="gplusarticle"><b>Please Share this article if you think it was worth reading. Thanks!</b></div></li>
+			<li><div class="fb-share-button" data-layout="button"> </div> </li>
+			<li><script type="IN/Share"></script></li>                    
+		</ul>-->
+	</div>
+		    <br>
+          <div class="col-xs-12 col-sm-12 col-md-12 similarauthor">  
+            
+          <div class="row footerheading">Author</div>
+            <div class="row">
+                <div class="col-md-12">
+                    
+
+<div class="col-md-12 author-wrap img-rounded">
+    <div class="author-image thumbnail">
+        <img id="ctl00_MainContent_authorInfo_imgAuthor" onerror="this.onload = null; this.src='/images/authors/NoImage.jpg';" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/Mahesh%2520Sabnis.jpg" style="border-width:0px;">
+         
+    </div>
+    <div class="author-desc caption">
+            Mahesh Sabnis is a DotNetCurry author and Microsoft MVP 
+having over 17 years of experience in IT education and development. He 
+is a Microsoft Certified Trainer (MCT) since 2005 and has conducted 
+various Corporate Training programs for .NET Technologies (all 
+versions). Follow him on twitter @<a href="http://twitter.com/maheshdotnet" target="_blank" rel="nofollow">maheshdotnet</a>
+    </div>
+   
+</div>
+
+
+
+  
+                </div>
+            </div>
+      </div>
+      </div>
+
+            
+      
+      <!--<div class="footerheading">Further Reading - Articles You May Like!</div>-->
+      
+      <br><br>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+     <a href="http://www.copyscape.com/" target="_blank" rel="nofollow"><img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/copyscape.gif" alt="Page copy protected against web site content infringement 	by Copyscape" title="Do not copy content from the page. Plagiarism will be detected by Copyscape." height="16" border="0"></a>
+    </div>
+<br><br><br>
+       
+   
+   <hr>
+  
+   <div id="ctl00_MainContent_panComments" class="col-md-12 spacer">
+	
+   <div class="footerheading">Feedback - Leave us some adulation, criticism and everything in between!</div>
+    <ul class="tabHeader">
+        <li class="current"><a class="show-comments" href="#t1">Click here to post your Comments</a>
+        </li>
+        
+    </ul>
+   <div class="tabContent">
+    <div id="t1" class="col-md-12 column current">
+            <div id="disqus_thread"></div>      
+       <!--<script type="text/javascript">
+            var disqus_shortname = 'dotnetcurry';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>-->
+   </div>
+    <div id="t2">
+   
+   
+</div> <!-- t2 -->
+    </div> <!-- tabcontent -->
+   
+</div>  
+      <!-- Place this render call where appropriate 
+<script type="text/javascript">
+    (function () {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+</script> 
+<script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+
+<script>    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");</script>-->
+<!-- Finally, to actually run the highlighter, you need to include this JS on your page -->
+
+       
+
+		                </div>
+
+                        
+
+                
+
+		                <div id="rightcol" class="col-md-4">
+    
+                            <!-- <div class="row">
+                                  <div class="spacerforsearch">
+                                    <div class="input-group">
+                                      <input name="ctl00$searchbox" id="ctl00_searchbox" type="text" class="form-control" placeholder="Search DotNetCurry.com for..." onFocus="this.className = &#39;form-control&#39;" style="border-color:#94C7EF;border-width:1px;border-style:solid;width:100%" />
+                                      <span class="input-group-btn">
+                                        <input type="submit" name="ctl00$SearchButton" value="Go!" id="ctl00_SearchButton" class="btn btn-default" type="button" />
+                                      </span>
+                                    </div>
+                                  </div>
+                            </div> -->
+                            <div class="margin-vertical-20">                           
+                            
+                            <div class="side-widget">
+					            <div class="featured-tools">
+						            <span>Featured Tools</span>
+						            <div id="creatives">
+				                        <div id="ban-pos-1">
+				                        <a href="http://www.dotnetcurry.net/s/dnc-arction-trading-may17" rel="nofollow" target="_blank"><img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/trading.png"></a></div>                                        
+				                        <div id="ban-pos-2" style="display: none;">
+                                            <div class="padding-vertical-10"></div>
+				                        <a href="http://www.dotnetcurry.net/s/dnc-gc-300-150" rel="nofollow" target="_blank"><img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/gc-300x150-versiona.jpg"></a></div>
+                                        <div class="padding-vertical-10"></div>
+				                        <div id="ban-pos-3">
+				                        <a href="http://www.dotnetcurry.org/r/dnc-csharpbk-web-300x150" rel="nofollow" target="_blank"><img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/csharp-book-new.png"></a></div>
+					                    <div class="padding-vertical-10"></div>
+				                        <div id="ban-pos-4">
+				                        <a href="http://www.dotnetcurry.net/s/dnc-products" rel="nofollow" target="_blank"><img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/dnc-js-widgets.png"></a></div>
+			                        </div>
+					            </div>
+				            </div>                          
+                            
+
+                            <div class="sec-title">
+                                <h4>Categories</h4>
+                            </div>
+                            <div class="side-widget">
+                                <ul id="toggle-view">
+                                    <li>
+                                        <h3>.NET Web</h3>
+                                        <span class="fa fa-angle-down"></span>
+                                        <div class="toggle-panel">
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/aspnet">ASP.NET</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/aspnet-mvc">ASP.NET MVC</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/aspnet-core">ASP.NET Core</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/aspnet-ajax">ASP.NET AJAX</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/sharepoint">SharePoint</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/wcf">WCF</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h3>.NET Framework, Visual Studio and C#</h3>
+                                        <span class="fa fa-angle-down"></span>
+                                        <div class="toggle-panel">
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/csharp">C#</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/linq">LINQ</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/visualstudio">Visual Studio</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/vsts-tfs">VSTS &amp; TFS</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/entityframework">Entity Framework</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/dotnetframework">.NET Framework</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/dotnet-standard-core">.NET Standard &amp; .NET Core</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h3>Patterns &amp; Practices</h3>
+                                        <span class="fa fa-angle-down"></span>
+                                        <div class="toggle-panel">
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/patterns-practices">Design Patterns</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/software-gardening">Software Gardening</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h3>Cloud and Mobile</h3>
+                                        <span class="fa fa-angle-down"></span>
+                                        <div class="toggle-panel">
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/windows-azure">Microsoft Azure</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/xamarin">Xamarin</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/powershell">Powershell</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/machine-learning-ai">Machine Learning &amp; AI</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/windows-store">UWP &amp; Windows Store</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/windowsphone">Windows Phone</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h3>JavaScript</h3>
+                                        <span class="fa fa-angle-down"></span>
+                                        <div class="toggle-panel">
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/typescript">TypeScript</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/angularjs">Angular</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/jquery-aspnet">jQuery</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/nodejs">Node.js</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/reactjs">React.js</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/backbonejs">Backbone.js</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/html5-javascript">HTML5 &amp; JavaScript</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/bootstrap-css">Bootstrap &amp; CSS</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h3>.NET Desktop</h3>
+                                        <span class="fa fa-angle-down"></span>
+                                        <div class="toggle-panel">
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/wpf">WPF</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/winforms">WinForms</a>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <h3>Interview Questions &amp; Product Reviews</h3>
+                                        <span class="fa fa-angle-down"></span>
+                                        <div class="toggle-panel">
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/dotnetinterview">.NET Interview Q&amp;A</a>
+                                                <a href="https://www.dotnetcurry.com/tutorials/product-articles-review">Product Reviews</a>
+                                            </div>
+                                            <div>
+                                                <a href="https://www.dotnetcurry.com/tutorials/general-programming-topics">General Topics</a>
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="sec-title">
+                                <h3><b>JOIN OUR COMMUNITY</b></h3>
+                            </div>
+                            <div class="side-widget">
+					            
+                                <div class="side-social">
+                        <a href="https://www.facebook.com/dotnetcurry" rel="nofollow" target="_blank"><i class="fa fa-facebook"></i> 51,059 <span>fans</span></a>
+                        <a href="https://www.twitter.com/dotnetcurry" rel="nofollow" target="_blank"><i class="fa fa-twitter"></i> 7,564 <span>followers</span></a>
+                        <a href="https://www.dotnetcurry.com/magazine/"><i class="fa fa-envelope"></i> 102,312 <span>subscribers</span></a>
+                    </div>
+				            </div>
+
+                            <div class="sec-title">
+                                <h3><b>POPULAR ARTICLES</b></h3>
+                            </div>
+                            <div id="latestart" class="side-widget">
+                                <div>
+                                     
+            <a id="ctl00_toplat_Repeater1_ctl00_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1457" style="color:#4A75AD;font-weight:normal;">C# Sharding and Multithreading - Deep Dive</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl02_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1461" style="color:#4A75AD;font-weight:normal;">Command Query Separation (CQS) - A simple but powerful pattern</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl04_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1455" style="color:#4A75AD;font-weight:normal;">Interview with the C# Boss - Mads Torgersen</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl06_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1464" style="color:#4A75AD;font-weight:normal;">Writing Pure Code in C#</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl08_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1460" style="color:#4A75AD;font-weight:normal;">Blazor - .NET in the browser</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl10_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1465" style="color:#4A75AD;font-weight:normal;">The Evolution of C#</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl12_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1466" style="color:#4A75AD;font-weight:normal;">How to Choose the Right .NET Collection Class?</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl14_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1474" style="color:#4A75AD;font-weight:normal;">What Was New for .NET Developers in 2018 &amp; the Road Ahead</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl16_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1469" style="color:#4A75AD;font-weight:normal;">Composing Honest Methods in C#</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl18_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1456" style="color:#4A75AD;font-weight:normal;">Integration Testing made Simple for CRUD applications with SqlLocalDB</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl20_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1459" style="color:#4A75AD;font-weight:normal;">Serverless Apps with Azure Functions</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl22_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1471" style="color:#4A75AD;font-weight:normal;">Garbage Collection in C# (.NET Framework and .NET Core)</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl24_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1472" style="color:#4A75AD;font-weight:normal;">Less commonly used C# operators</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl26_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1468" style="color:#4A75AD;font-weight:normal;">Facade Design Pattern: Still relevant in ASP.NET Core?</a>
+            
+                 <br><br>
+            
+            <a id="ctl00_toplat_Repeater1_ctl28_lnkTitle" class="top" href="http://www.dotnetcurry.com/ShowArticle.aspx?ID=1462" style="color:#4A75AD;font-weight:normal;">Non-Functional Requirements (NFRs): The Unsung Heroes</a>
+            
+        <br>
+        <br>
+        <br>
+        
+                                </div>
+                            </div>
+
+                            <div class="sec-title">
+                                <h3><b>C# .NET BOOK</b></h3>
+                            </div>
+                            <div class="side-widget"> 
+			                    <a href="http://www.dotnetcurry.org/r/dnc-csharpbk-web-300x600x2-green" rel="nofollow" target="_blank"><img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/csharpbook-300x600-2.jpg" style="width:300px;" alt="C# Book for Building Concepts and Interviews"></a>
+                            </div>
+
+                            <div class="sec-title-plain">
+                                 <h4>Tags</h4>
+                            </div>
+                            <div class="side-widget">
+                                <div class="tags">
+                                    <a href="https://www.dotnetcurry.com/tutorials/aspnet-mvc">ASP.NET MVC</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/aspnet-core">ASP.NET Core</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/aspnet">ASP.NET</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/sharepoint">SharePoint</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/patterns-practices">Design Patterns</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/csharp">C#</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/linq">LINQ</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/wpf">WPF</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/wcf">WCF</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/visualstudio">Visual Studio</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/vsts-tfs">VSTS &amp; TFS</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/windows-azure">Azure</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/entityframework">Entity Framework</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/angularjs">Angular.js</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/reactjs">React.js</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/jquery-aspnet">jQuery</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/html5-javascript">JavaScript</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/html5-javascript">HTML5</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/dotnet-standard-core">.NET Core</a>
+                                    <a href="https://www.dotnetcurry.com/tutorials/dotnetframework">.NET Framework</a>
+                                </div>
+                            </div>
+
+                            <div class="sec-title">
+                                <h3><b>JQUERY COOKBOOK</b></h3>
+                            </div>
+                            <div class="side-widget">
+                                <a href="https://www.dotnetcurry.net/s/dnc-jqcookbook" rel="nofollow" target="_blank"><img src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/300x300-jqckbk.png" alt="jQuery CookBook"></a>
+                            </div>		                
+                       
+                            
+
+
+                    </div>
+	            </div>                
+
+            </div> 
+            <!-- container -->
+
+	    
+        </div>
+
+        <!-- footer -->
+        <footer class="margin-top-30">
+            <div class="container">
+                <div class="footer-head">
+                        <div class="row center-content">
+                        <div class="col-md-2 col-sm-3">
+                            <a href="https://www.dotnetcurry.com/">
+                                <img data-src="/img/dnc-logo-tee-trans.png" class="img-responsive lazyloaded" alt="" src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/dnc-logo-tee-trans.png">
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-sm-4">
+                    <p></p>
+                </div>
+                <!--<div class="col-md-4 col-sm-5">
+                    <form class="footer-search">
+                        <input type="search" placeholder="Search">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>-->
+            </div>
+        </div>
+
+            <div class="footer-content">
+            <div class="row">
+                <div class="col-sm-2">
+                    <h5 class="text-white">Server-Side</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://www.dotnetcurry.com/tutorials/aspnet">ASP.NET</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/aspnet-core">ASP.NET Core</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/aspnet-mvc">ASP.NET MVC</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/wcf">WCF</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/sharepoint">SharePoint</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-2">
+                    <h5 class="text-white">Client-side</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://www.dotnetcurry.com/tutorials/angularjs">Angular.js</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/reactjs">React.js</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/jquery-aspnet">jQuery</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/backbonejs">Backbone.js</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/html5-javascript">HTML5</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/bootstrap-css">CSS</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-2">
+                    <h5 class="text-white">.NET</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://www.dotnetcurry.com/tutorials/csharp">C#</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/visualstudio">Visual Studio</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/vsts-tfs">VSTS &amp; TFS</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/linq">LINQ</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/entityframework">Entity Framework</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/dotnetframework">.NET Framework</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/dotnet-standard-core">.NET Standard &amp; .NET Core</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/wpf">WPF</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/winforms">WinForms</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-2">
+                    <h5 class="text-white">Cloud and Mobile</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://www.dotnetcurry.com/tutorials/windows-azure">Microsoft Azure</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/devops">DevOps</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/xamarin">Xamarin</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/powershell">Powershell</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/machine-learning-ai">Machine Learning &amp; AI</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/windows-store">UWP &amp; Windows Store</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/windowsphone">Windows Phone</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-2">
+                    <h5 class="text-white">Skill Up</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://www.dotnetcurry.com/tutorials/patterns-practices">Design Patterns</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/software-gardening">Software Gardening</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/dotnetinterview">.NET Interview Q&amp;A</a></li>
+                        <li><a href="https://www.dotnetcurry.com/magazine/" class="last">Magazines</a></li>
+                        <li><a href="http://www.jquerycookbook.com/" rel="nofollow" target="_blank">Books</a></li>
+                        <li><a href="https://www.dotnetcurry.com/tutorials/product-articles-review">Product Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-2">
+                    <h5 class="text-white">Follow Us</h5>
+                    <ul class="footer-social">
+                        <li><a href="https://www.facebook.com/dotnetcurry" rel="nofollow" target="_blank">Facebook</a></li>
+                        <li><a href="https://www.twitter.com/dotnetcurry" rel="nofollow" target="_blank">Twitter</a></li>
+                        <li><a href="https://github.com/dotnetcurry" rel="nofollow" target="_blank">Github</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+                <div class="footer-bottom">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>© 2007-2019 DotNetCurry.com (A subsidiary of A2Z Knowledge Visuals Pvt. Ltd). All rights reserved.</p>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ul class="list-inline">
+                        <li><a href="https://www.dotnetcurry.com/Contact.aspx">Contact Us</a></li>
+                        <li><a href="https://www.dotnetcurry.com/WriteForUs.aspx">Write For Us</a></li>
+                        <li><a href="https://www.dotnetcurry.com/PrivacyPolicy.aspx">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            </div>
+        </footer>
+        <!-- footer -->	
+    
+
+   <script src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/jquery.js"></script>
+<script src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/geoip2.js"></script>
+<script src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/scriptsmin"></script>
+<script src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/framework"></script>
+
+           <script type="text/javascript">
+               SyntaxHighlighter.defaults['auto-links'] = false;
+               SyntaxHighlighter.defaults['gutter'] = false;
+               SyntaxHighlighter.defaults['toolbar'] = false;
+               SyntaxHighlighter.all()
+            </script>
+            <script>
+                   $(function () {
+                       $('.tabHeader').children().first().addClass('current');
+                       $('.tabContent').children().first().addClass('current');
+
+
+                       $('.tabHeader li').click(function (e) {
+                           e.preventDefault();
+
+                           $(this).siblings('.current').removeClass('current');
+                           $(this).addClass('current');
+
+                           $('.tabContent').children('.current').removeClass('current');
+                           $('.tabContent').children().eq($(this).index()).addClass('current');
+                       });
+                   });
+            </script>
+    
+    <script src="Using%20EF%20Core%20in%20ASP.NET%20Core%20Web%20API%20for%20performing%20CRUD%20operations%20%20%20DotNetCurry_pliki/webfont.js"></script>
+    <script>
+         WebFont.load({
+             google: {
+                 families: ['Hind Vadodara:300,400,500,600,700']
+             }
+         });
+    </script>
+
+</div></form></body></html>
